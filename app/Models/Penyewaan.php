@@ -20,6 +20,11 @@ class Rents extends Authenticatable
     protected $fillable = [
         'user_id',
         'total_harga',
-        'items',
+        'start_date',
+        'end_date',
+    ];
+
+    protected $casts = [
+        'items' => 'array',
     ];
 }

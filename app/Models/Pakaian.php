@@ -18,11 +18,19 @@ class Rents extends Authenticatable
      * @var array<int, string>
      */
     protected $fillable = [
+        'id',
         'name',
+        'description',
+        'color',
+        'model_height',
         'size',
         'merek',
         'category',
         'stock',
         'harga',
+    ];
+
+    protected $casts = [
+        'img' => 'array'
     ];
 }

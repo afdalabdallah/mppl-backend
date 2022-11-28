@@ -16,11 +16,15 @@ return new class extends Migration
         Schema::create('pakaian', function (Blueprint $table) {
             $table->string('id')->unique();
             $table->string('name');
+            $table->string('description');
+            $table->string('color');
+            $table->string('model_height');
             $table->string('size');
             $table->string('merek');
             $table->string('category');
             $table->integer('stock');
-            $table->decimal('harga', $precision = 10, $scale=2);
+            $table->decimal('harga', $precision = 10, $scale = 2);
+            $table->json('img');
             $table->timestamps();
         });
     }
