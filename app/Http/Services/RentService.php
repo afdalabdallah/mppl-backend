@@ -10,59 +10,54 @@ use DB;
 
 class RentService
 {
-    public static function getData($id_user)
+    public static function getOrderData($id_user)
     {
+        $tableData = DB::table('penyewaan')
+            ->where('penyewaan.user_id', $id_user)
+            ->where('penyewaan.status', '!=', 'cart');
+        $tableData = $tableData->get();
+        return ($tableData);
+    }
 
-        $tableData = DB::table('rents')
-            ->join('building', 'building.id', '=', 'rents.building_id')
-            ->select('building.name', 'building.price', 'rents.*')
-            ->where('rents.user_id', $id_user);
+    public static function getCartData($id_user,$status)
+    {
+        $tableData = DB::table('penyewaan')
+            ->where('penyewaan.user_id', $id_user)
+            ->where('penyewaan.status', $status);
         $tableData = $tableData->get();
         return ($tableData);
     }
 
     public static function getDetail($id)
     {
-        $tableData = DB::table('rents')
-            ->join('building', 'building.id', '=', 'rents.building_id')
-            ->select('rents.*', 'building.area', 'building.name', 'building.price', 'building.address')
-            ->where('rents.id', $id);
+        $tableData = DB::table('penyewaan')
+            ->where('penyewaan.id', $id);
         $tableData = $tableData->get()->first();
         return ($tableData);
     }
 
     public static function insertData($requestData)
     {
-        $table = DB::table('rents');
+        $table = DB::table('penyewaan');
         $id = IdGenerator::generate([
-            'table' => 'rents',
+            'table' => 'penyewaan',
             'length' => 5,
             'prefix' => 'R'
         ]);
 
-        $s_date = $requestData['start_time'];
-        $e_date = $requestData['end_time'];
-
-        $datetime1 = new DateTime($s_date);
-        $datetime2 = new DateTime($e_date);
-
-        $interval = $datetime1->diff($datetime2);
-        $days = $interval->format('%a');
-
-        if ($days == 0) {
-            $days += 1;
-        }
-
-        $total_price = (float)$requestData['price'] * (float)($days);
-
-
+        $rows = $table->count();
+        $data=[];
+        $total_harga = 0;   
+        
         $data = [
             'id' => $id,
             'user_id' => $requestData['user_id'],
-            'building_id' => $requestData['building_id'],
-            'total_price' => $total_price,
-            'start_time' => $requestData['start_time'],
-            'end_time' => $requestData['end_time'],
+            'item_id' => $requestData['item_id'],
+            'qty' => $requestData['qty'],
+            'total_harga' => $requestData['harga'],
+            'status' => $requestData['status'],
+            'start_date' => $requestData['start_time'],
+            'end_date' => $requestData['end_time'],
             'created_at' => Carbon::now()->toDateTimeString(),
             'updated_at' => Carbon::now()->toDateTimeString()
         ];
@@ -71,28 +66,12 @@ class RentService
 
     public static function updateData($id, $requestData)
     {
-        $s_date = $requestData['start_time'];
-        $e_date = $requestData['end_time'];
 
-        $datetime1 = new DateTime($s_date);
-        $datetime2 = new DateTime($e_date);
-
-        $interval = $datetime1->diff($datetime2);
-        $days = $interval->format('%a');
-
-        if ($days == 0) {
-            $days += 1;
-        }
-
-        $total_price = (float)$requestData['total_price'] * (float)($days);
-
-        $requestData['total_price'] = $total_price;
-
-        DB::table('rents')->where('id', $id)->update($requestData);
+        DB::table('penyewaan')->where('id', $id)->update($requestData);
     }
 
     public static function deleteData($id)
     {
-        DB::table('rents')->where('id', $id)->delete();
+        DB::table('penyewaan')->where('id', $id)->delete();
     }
 }

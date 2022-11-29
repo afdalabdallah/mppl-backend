@@ -3,13 +3,14 @@
 namespace App\Http\Controllers;
 
 use App\Http\Services\RentService;
-use App\Http\Services\BuildingService;
+use App\Http\Services\PakaianService;
 use Carbon\Carbon;
+use DateTime;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\App;
 use Illuminate\Support\Facades\Auth;
 
-class RentController extends Controller
+class CartController extends Controller
 {
     /**
      * Create a new controller instance.
@@ -26,20 +27,39 @@ class RentController extends Controller
      *
      * @return \Illuminate\Contracts\Support\Renderable
      */
-    public function getRentData()
+    public function getCartData()
     {
         $id_user = Auth::id();
         $getTable = new RentService();
-        $rentData = $getTable->getData($id_user);
+        $pakaianDetail = new PakaianService();
+
+        $rentData = $getTable->getCartData($id_user, 'cart');
         $total_price = 0;
         foreach ($rentData as $data) {
-            $total_price += $data->price;
+            $total_price += $data->total_harga;
+            $pakaianData = $pakaianDetail->getDetail($data->item_id);
+            $data->size = $pakaianData[0]->size;
+            $img = json_decode($pakaianData[0]->img);
+            $data->name = $pakaianData[0]->name;
+            $data->img = $img[4];
+            $data->color = $pakaianData[0]->color;
+
+            $s_date = $data->start_date;
+            $s_date = explode(" ", $s_date);
+
+            $e_date = $data->end_date;
+            $e_date = explode(" ", $e_date);
+
+            $data->start_date = $s_date[0];
+            $data->end_date = $e_date[0];
         }
-        return view('keranjang')->with(["rentData" => $rentData])->with('totalPrice', $total_price);
+        
+        // return($rentData);
+        return view('cart')->with(["rentData" => $rentData])->with('totalPrice', $total_price);
         //return view
     }
 
-    public function getRentDetail($id)
+    public function getCartDetail($id)
     {
         $getTable = new RentService();
         $rentDetail = $getTable->getDetail($id);
@@ -48,43 +68,113 @@ class RentController extends Controller
 
     }
 
-    public function insertRent($id)
+    public function insertCart($id)
     {
         $rentService = new RentService();
-        $buildingData = new BuildingService();
-        $buildingDetail = $buildingData->getDetail($id);
+        $pakaianData = new PakaianService();
+        $pakaianDetail = $pakaianData->getDetail($id);
 
-        $requestData = [
-            'user_id' => Auth::id(),
-            'building_id' => $id,
+        $id_user = Auth::id();
+        $s_date = Request()->start_time;
+        $e_date = Request()->end_time;
+
+        $datetime1 = new DateTime($s_date);
+        $datetime2 = new DateTime($e_date);
+
+        $interval = $datetime1->diff($datetime2);
+        $days = $interval->format('%a');
+
+        if ($days == 0) {
+            $days += 1;
+        }
+        $harga = $pakaianDetail[0]->harga;
+        
+        $total_price = (float)$harga * (float)($days);
+
+        $data = [
+            'user_id' => $id_user,
+            'item_id' => $id,
+            'harga' =>  $total_price,
+            'qty' => 1,
+            'status' => 'cart',
             'start_time' => Request()->start_time,
-            'end_time' => Request()->start_time,
-            'price' => $buildingDetail[0]->price,
+            'end_time' => Request()->end_time,
+           
         ];
-        $rentService->insertData($requestData);
-        return redirect('/keranjang'); //temp return, ganti ke keranjang klo udah jadi 
+        // return ($data);
+        $rentService->insertData($data);
+        return redirect('/cart'); //temp return, ganti ke keranjang klo udah jadi 
     }
 
-    public function updateRent($id)
+    public function updateCart($id)
     {
         $getTable = new RentService();
+        $cart = $getTable->getDetail($id);
+        $pakaianData = new PakaianService();
+        $pakaianDetail = $pakaianData->getDetail($cart->item_id);
+
+        $s_date = $cart->start_date;
+        $e_date = $cart->end_date;
+
+        $datetime1 = new DateTime($s_date);
+        $datetime2 = new DateTime($e_date);
+
+        $interval = $datetime1->diff($datetime2);
+        $days = $interval->format('%a');
+
+        if ($days == 0) {
+            $days += 1;
+        }
+        $harga = $pakaianDetail[0]->harga;
+        
+        $initial_price = (float)$harga * (float)($days);
+        
         $requestData = [
-            'building_id' => Request()->building_id,
-            'start_time' => Request()->start_time,
-            'end_time' => Request()->start_time,
-            'total_price' => '',
-            'updated_at' => Carbon::now()->toDateTimeString()
+            'qty' => $cart->qty + 1,
+            'total_harga' => $cart->total_harga + $initial_price
         ];
 
         $getTable->updateData($id, $requestData);
-        return redirect('/keranjang');
+        return redirect('/cart');
     }
 
-    public function deleteRent($id)
+    public function subtractCart($id)
+    {
+        $getTable = new RentService();
+        $cart = $getTable->getDetail($id);
+        $pakaianData = new PakaianService();
+        $pakaianDetail = $pakaianData->getDetail($cart->item_id);
+
+        $s_date = $cart->start_date;
+        $e_date = $cart->end_date;
+
+        $datetime1 = new DateTime($s_date);
+        $datetime2 = new DateTime($e_date);
+
+        $interval = $datetime1->diff($datetime2);
+        $days = $interval->format('%a');
+
+        if ($days == 0) {
+            $days += 1;
+        }
+        $harga = $pakaianDetail[0]->harga;
+        
+        $initial_price = (float)$harga * (float)($days);
+        
+        $requestData = [
+            'qty' => $cart->qty - 1,
+            'total_harga' => $cart->total_harga - $initial_price
+        ];
+
+        $getTable->updateData($id, $requestData);
+        return redirect('/cart');
+    }
+
+    public function deleteCart($id)
     {
         $getTable = new RentService();
         $getTable->deleteData($id);
-        return redirect('/keranjang');
+        return redirect('/cart');
         //return view
     }
 }

@@ -10,7 +10,7 @@
     <script src="https://cdn.tailwindcss.com"></script>
     <!-- Fonts -->
     <link rel="stylesheet" href="https://fonts.bunny.net/css2?family=Nunito:wght@400;600;700&display=swap">
-
+    <link rel="shortcut icon" href="/img/icon.png" type="image/x-icon">
     <style>
         /* custom scrollbar */
         ::-webkit-scrollbar {
@@ -47,24 +47,24 @@
             </div>
             <div class="flex items-center justify-center text-[#2DBE78] font-semibold gap-10 mr-5">
                 <div>
-                    <a href="" class="hover:text-white">Dashboard</a>
+                    <a href="/dashboard" class="hover:text-white">Dashboard</a>
                 </div>
                 <div>
-                    <a href="" class="hover:text-white">Cart</a>
+                    <a href="/cart" class="hover:text-white">Cart</a>
                 </div>
                 @guest
-                    <div>
-                        <a href="/login">
-                            <div>
-                                <button
-                                    class="bg-[#2DBE78] text-black hover:bg-white font-semibold hover:text-[#2DBE78] py-2 px-4 rounded-full">
-                                    Login
-                                </button>
-                            </div>
-                        </a>
-                    </div>
+                <div>
+                    <a href="/login">
+                        <div>
+                            <button
+                                class="bg-[#2DBE78] text-black hover:bg-white font-semibold hover:text-[#2DBE78] py-2 px-4 rounded-full">
+                                Login
+                            </button>
+                        </div>
+                    </a>
+                </div>
                 @endguest
-
+                @auth
                 <div>
                     <div class="relative inline-block text-left">
                         <div>
@@ -75,13 +75,12 @@
                             </button>
                         </div>
                         <div class="hidden origin-top-right absolute right-0 mt-2 w-56 rounded-md shadow-lg bg-white ring-1 ring-black ring-opacity-5 focus:outline-none"
-                            role="menu" aria-orientation="vertical" aria-labelledby="options-menu"
-                            id="profileDropdown">
+                            role="menu" aria-orientation="vertical" aria-labelledby="options-menu" id="profileDropdown">
                             <div class="py-1" role="none">
                                 <a href="/profile" class="text-gray-700 block px-4 py-2 text-sm" role="menuitem"
                                     tabindex="-1" id="options-menu-item-0">Profile</a>
-                                <a href="" class="text-gray-700 block px-4 py-2 text-sm" role="menuitem"
-                                    tabindex="-1" id="options-menu-item-1">Order Status</a>
+                                <a href="" class="text-gray-700 block px-4 py-2 text-sm" role="menuitem" tabindex="-1"
+                                    id="options-menu-item-1">Order Status</a>
                                 <form method="POST" action="{{ route('logout') }}">
                                     @csrf
                                     <a href="" onclick="event.preventDefault(); this.closest('form').submit();"
@@ -92,10 +91,9 @@
                             </div>
                         </div>
                     </div>
-                    <div>
-
-                    </div>
                 </div>
+                @endauth
+
             </div>
     </nav>
 
@@ -104,7 +102,7 @@
         @yield('main')
     </main>
 
-    <footer class="bg-black h-[350px] text-white p-[70px]">
+    <footer class="bg-black h-[350px] text-white p-[70px] mt-20">
         <!-- container -->
         <div class="">
             <!-- row -->

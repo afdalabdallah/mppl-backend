@@ -16,10 +16,13 @@ return new class extends Migration
         Schema::create('penyewaan', function (Blueprint $table) {
             $table->string('id')->unique();
             $table->string('user_id');
+            $table->string('item_id');
+            $table->integer('qty');
             $table->decimal('total_harga', $precision = 10, $scale = 2);
-            $table->json('items');
+            $table->string('status');
             $table->dateTime('start_date');
             $table->dateTime('end_date');
+            $table->string('address')->nullable();
             $table->timestamps();
         });
     }

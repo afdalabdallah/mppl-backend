@@ -6,6 +6,7 @@ use App\Http\Requests\ProfileUpdateRequest;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Redirect;
+use DB;
 
 class ProfileController extends Controller
 {
@@ -20,6 +21,11 @@ class ProfileController extends Controller
         return view('profile.edit', [
             'user' => $request->user(),
         ]);
+    }
+
+    public function getUser($id){
+        $table = DB::table('users')->where('id', $id)->get()->first();
+        return ($table);
     }
 
     /**
