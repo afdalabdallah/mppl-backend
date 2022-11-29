@@ -19,7 +19,16 @@ class RentService
         return ($tableData);
     }
 
-    public static function getCartData($id_user,$status)
+    public static function getOrderDetail($id)
+    {
+        $tableData = DB::table('penyewaan')
+            ->where('penyewaan.id', $id)
+            ->where('penyewaan.status', '!=', 'cart');
+        $tableData = $tableData->get()->first();
+        return ($tableData);
+    }
+
+    public static function getCartData($id_user, $status)
     {
         $tableData = DB::table('penyewaan')
             ->where('penyewaan.user_id', $id_user)
@@ -46,9 +55,9 @@ class RentService
         ]);
 
         $rows = $table->count();
-        $data=[];
-        $total_harga = 0;   
-        
+        $data = [];
+        $total_harga = 0;
+
         $data = [
             'id' => $id,
             'user_id' => $requestData['user_id'],

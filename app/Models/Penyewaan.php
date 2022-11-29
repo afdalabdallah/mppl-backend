@@ -25,8 +25,10 @@ class Rents extends Authenticatable
         'start_date',
         'end_date',
         'status',
-        'address',
+
     ];
 
-    
+    protected $casts = [
+        'address' => 'array'
+    ];
 }

@@ -53,8 +53,8 @@ class CartController extends Controller
             $data->start_date = $s_date[0];
             $data->end_date = $e_date[0];
         }
-        
-        // return($rentData);
+
+        // return ($rentData);
         return view('cart')->with(["rentData" => $rentData])->with('totalPrice', $total_price);
         //return view
     }
@@ -88,7 +88,7 @@ class CartController extends Controller
             $days += 1;
         }
         $harga = $pakaianDetail[0]->harga;
-        
+
         $total_price = (float)$harga * (float)($days);
 
         $data = [
@@ -99,7 +99,7 @@ class CartController extends Controller
             'status' => 'cart',
             'start_time' => Request()->start_time,
             'end_time' => Request()->end_time,
-           
+
         ];
         // return ($data);
         $rentService->insertData($data);
@@ -126,9 +126,9 @@ class CartController extends Controller
             $days += 1;
         }
         $harga = $pakaianDetail[0]->harga;
-        
+
         $initial_price = (float)$harga * (float)($days);
-        
+
         $requestData = [
             'qty' => $cart->qty + 1,
             'total_harga' => $cart->total_harga + $initial_price
@@ -158,9 +158,9 @@ class CartController extends Controller
             $days += 1;
         }
         $harga = $pakaianDetail[0]->harga;
-        
+
         $initial_price = (float)$harga * (float)($days);
-        
+
         $requestData = [
             'qty' => $cart->qty - 1,
             'total_harga' => $cart->total_harga - $initial_price

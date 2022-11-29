@@ -22,7 +22,7 @@ return new class extends Migration
             $table->string('status');
             $table->dateTime('start_date');
             $table->dateTime('end_date');
-            $table->string('address')->nullable();
+            $table->json('address')->nullable();
             $table->timestamps();
         });
     }

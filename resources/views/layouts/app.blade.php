@@ -53,45 +53,46 @@
                     <a href="/cart" class="hover:text-white">Cart</a>
                 </div>
                 @guest
-                <div>
-                    <a href="/login">
-                        <div>
-                            <button
-                                class="bg-[#2DBE78] text-black hover:bg-white font-semibold hover:text-[#2DBE78] py-2 px-4 rounded-full">
-                                Login
-                            </button>
-                        </div>
-                    </a>
-                </div>
+                    <div>
+                        <a href="/login">
+                            <div>
+                                <button
+                                    class="bg-[#2DBE78] text-black hover:bg-white font-semibold hover:text-[#2DBE78] py-2 px-4 rounded-full">
+                                    Login
+                                </button>
+                            </div>
+                        </a>
+                    </div>
                 @endguest
                 @auth
-                <div>
-                    <div class="relative inline-block text-left">
-                        <div>
-                            <button type="button"
-                                class="inline-flex justify-center w-full rounded-full border border-transparent shadow-sm px-2 py-2 bg-transparent text-sm font-medium text-white hover:bg-white hover:text-[#2DBE78]"
-                                id="options-menu" aria-haspopup="true" aria-expanded="true">
-                                <img src="/img/profile.png" alt="avatar" class="h-[30px] w-[30px] rounded-full">
-                            </button>
-                        </div>
-                        <div class="hidden origin-top-right absolute right-0 mt-2 w-56 rounded-md shadow-lg bg-white ring-1 ring-black ring-opacity-5 focus:outline-none"
-                            role="menu" aria-orientation="vertical" aria-labelledby="options-menu" id="profileDropdown">
-                            <div class="py-1" role="none">
-                                <a href="/profile" class="text-gray-700 block px-4 py-2 text-sm" role="menuitem"
-                                    tabindex="-1" id="options-menu-item-0">Profile</a>
-                                <a href="" class="text-gray-700 block px-4 py-2 text-sm" role="menuitem" tabindex="-1"
-                                    id="options-menu-item-1">Order Status</a>
-                                <form method="POST" action="{{ route('logout') }}">
-                                    @csrf
-                                    <a href="" onclick="event.preventDefault(); this.closest('form').submit();"
-                                        class="text-gray-700 block px-4 py-2 text-sm" role="menuitem" tabindex="-1"
-                                        id="options-menu-item-1">Logout</a>
-                                </form>
+                    <div>
+                        <div class="relative inline-block text-left">
+                            <div>
+                                <button type="button"
+                                    class="inline-flex justify-center w-full rounded-full border border-transparent shadow-sm px-2 py-2 bg-transparent text-sm font-medium text-white hover:bg-white hover:text-[#2DBE78]"
+                                    id="options-menu" aria-haspopup="true" aria-expanded="true">
+                                    <img src="/img/profile.png" alt="avatar" class="h-[30px] w-[30px] rounded-full">
+                                </button>
+                            </div>
+                            <div class="hidden origin-top-right absolute right-0 mt-2 w-56 rounded-md shadow-lg bg-white ring-1 ring-black ring-opacity-5 focus:outline-none"
+                                role="menu" aria-orientation="vertical" aria-labelledby="options-menu"
+                                id="profileDropdown">
+                                <div class="py-1" role="none">
+                                    <a href="/profile" class="text-gray-700 block px-4 py-2 text-sm" role="menuitem"
+                                        tabindex="-1" id="options-menu-item-0">Profile</a>
+                                    <a href="/order" class="text-gray-700 block px-4 py-2 text-sm" role="menuitem"
+                                        tabindex="-1" id="options-menu-item-1">Order Status</a>
+                                    <form method="POST" action="{{ route('logout') }}">
+                                        @csrf
+                                        <a href="" onclick="event.preventDefault(); this.closest('form').submit();"
+                                            class="text-gray-700 block px-4 py-2 text-sm" role="menuitem" tabindex="-1"
+                                            id="options-menu-item-1">Logout</a>
+                                    </form>
 
+                                </div>
                             </div>
                         </div>
                     </div>
-                </div>
                 @endauth
 
             </div>
