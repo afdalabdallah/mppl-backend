@@ -11,14 +11,14 @@ class PakaianService
 {
     public static function getData()
     {
-        $tableData = DB::table('pakaian');
+        $tableData = DB::table('pakaian')->where('stock', '>', 1);
         $tableData = $tableData->get();
         return ($tableData);
     }
 
     public static function getCategory($category)
     {
-        $tableData = DB::table('pakaian')->where('category', $category);
+        $tableData = DB::table('pakaian')->where('category', $category)->where('stock', '>', 1);
         $tableData = $tableData->get();
         return ($tableData);
     }

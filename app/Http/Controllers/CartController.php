@@ -87,6 +87,7 @@ class CartController extends Controller
         if ($days == 0) {
             $days += 1;
         }
+
         $harga = $pakaianDetail[0]->harga;
 
         $total_price = (float)$harga * (float)($days);
@@ -128,13 +129,15 @@ class CartController extends Controller
         $harga = $pakaianDetail[0]->harga;
 
         $initial_price = (float)$harga * (float)($days);
+        $stock = $pakaianDetail[0]->stock;
+        if ($cart->qty + 1 <= $stock) {
+            $requestData = [
+                'qty' => $cart->qty + 1,
+                'total_harga' => $cart->total_harga + $initial_price
+            ];
+            $getTable->updateData($id, $requestData);
+        }
 
-        $requestData = [
-            'qty' => $cart->qty + 1,
-            'total_harga' => $cart->total_harga + $initial_price
-        ];
-
-        $getTable->updateData($id, $requestData);
         return redirect('/cart');
     }
 
@@ -161,12 +164,16 @@ class CartController extends Controller
 
         $initial_price = (float)$harga * (float)($days);
 
-        $requestData = [
-            'qty' => $cart->qty - 1,
-            'total_harga' => $cart->total_harga - $initial_price
-        ];
+        if ($cart->qty - 1 == 0) {
+            $getTable->deleteData($id);
+        } else {
+            $requestData = [
+                'qty' => $cart->qty - 1,
+                'total_harga' => $cart->total_harga - $initial_price
+            ];
 
-        $getTable->updateData($id, $requestData);
+            $getTable->updateData($id, $requestData);
+        }
         return redirect('/cart');
     }
 

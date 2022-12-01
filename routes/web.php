@@ -30,6 +30,7 @@ Route::get('/dashboard', function () {
 })->name('dashboard');
 
 Route::get('/catalog/{category}', [CatalogController::class, 'viewCatalog']);
+Route::get('/catalog', [CatalogController::class, 'viewAllCatalog']);
 
 Route::get('/item/{id}', [DetailController::class, 'viewDetail']);
 
@@ -44,7 +45,6 @@ Route::middleware('auth')->group(function () {
     Route::post('/cart/delete/{id}', [CartController::class, 'deleteCart']);
     Route::post('/cart/update/add/{id}', [CartController::class, 'updateCart']);
     Route::post('/cart/update/subtract/{id}', [CartController::class, 'subtractCart']);
-
 
     Route::get('/checkout', [CheckoutController::class, 'getCheckoutData']);
     Route::post('/payment', [CheckoutController::class, 'updateAddress']);

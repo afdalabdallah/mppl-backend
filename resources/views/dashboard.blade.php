@@ -52,9 +52,9 @@
                     <img src="/img/dashboard/new_arrivals/newarrivals(2).png" alt="" class="h-[600px]">
                     <div class="pt-5">
                         <div class="text-2xl font-semibold">
-                            Coats & Parkas
+                            Shoes & Boots
                         </div>
-                        <a href="" class="">
+                        <a href="/catalog/Shoes" class="">
                             <div class="text-xl text-gray-400 hover:text-[#2DBE78] hover:font-semibold">
                                 Explore Now >
                             </div>
@@ -67,7 +67,7 @@
                         <div class="text-2xl font-semibold">
                             Tees & T-Shirt
                         </div>
-                        <a href="" class="">
+                        <a href="/catalog/Shirt" class="">
                             <div class="text-xl text-gray-400 hover:text-[#2DBE78] hover:font-semibold">
                                 Explore Now >
                             </div>
@@ -87,14 +87,14 @@
                             <div class="text-2xl font-semibold">
                                 Trending on instagram
                             </div>
-                            <a href="" class="">
+                            <a href="/catalog" class="">
                                 <div class="text-xl text-gray-400 hover:text-[#2DBE78] hover:font-semibold">
                                     Explore Now >
                                 </div>
                             </a>
                         </div>
                     </div>
-                    <div>
+                    {{-- <div>
                         <img src="/img/dashboard/young_favorite/youngfav(2).png" alt="" class="h-[350px]">
                         <div class="pt-5">
                             <div class="text-2xl font-semibold">
@@ -106,7 +106,7 @@
                                 </div>
                             </a>
                         </div>
-                    </div>
+                    </div> --}}
                 </div>
             </div>
         </div>

@@ -29,4 +29,15 @@ class CatalogController extends Controller
         return view('catalog')->with(["pakaianCatalog" => $pakaianCatalog]);
         // return ($pakaianCatalog);
     }
+
+    public function viewAllCatalog()
+    {
+        $pakaianTable = new PakaianService();
+        $pakaianCatalog = $pakaianTable->getData();
+        foreach ($pakaianCatalog as $item) {
+            $item->img = json_decode($item->img);
+        }
+        // return ($pakaianCatalog);
+        return view('catalog')->with(["pakaianCatalog" => $pakaianCatalog]);
+    }
 }
