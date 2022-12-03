@@ -24,31 +24,34 @@
             <x-text-input id="email" name="email" type="email" class="mt-1 block w-full" :value="old('email', $user->email)"
                 required autocomplete="email" />
             <x-input-error class="mt-2" :messages="$errors->get('email')" />
-
-            @if ($user instanceof \Illuminate\Contracts\Auth\MustVerifyEmail && !$user->hasVerifiedEmail())
-                <div>
-                    <p class="text-sm mt-2 text-gray-800">
-                        Your email address is unverified.
-
-                        <button form="send-verification"
-                            class="underline text-sm text-gray-600 hover:text-gray-900 rounded-md focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500">
-                            {{ __('Click here to re-send the verification email.') }}
-                        </button>
-                    </p>
-
-                    @if (session('status') === 'verification-link-sent')
-                        <p class="mt-2 font-medium text-sm text-green-600">
-                            {{ __('A new verification link has been sent to your email address.') }}
-                        </p>
-                    @endif
-                </div>
-            @endif
         </div>
         <div>
             <x-input-label for="no_telp" :value="__('No Telp')" />
             <x-text-input id="no_telp" name="no_telp" type="text" class="mt-1 block w-full" :value="old('name', $user->no_telp)"
                 required autofocus autocomplete="name" />
             <x-input-error class="mt-2" :messages="$errors->get('no_telp')" />
+        </div>
+        @if ($user->id_card != null)
+            <div>
+                <img class="h-[300px] " src="img/profile/{{ $user->id_card }}" />
+            </div>
+        @endif
+        <div>
+            <x-input-label for="id_card" :value="__('ID Card')" />
+            <x-text-input id="id_card" name="id_card" type="file" class="mt-1 block w-full" :value="old('name', $user->id_card)"
+                autofocus autocomplete="name" />
+            <x-input-error class="mt-2" :messages="$errors->get('id_card')" />
+        </div>
+        @if ($user->selfie_id != null)
+            <div>
+                <img class="h-[300px] " src="img/profile/{{ $user->selfie_id }}" />
+            </div>
+        @endif
+        <div>
+            <x-input-label for="selfie_id" :value="__('Selfie With ID Card')" />
+            <x-text-input id="selfie_id" name="selfie_id" type="file" class="mt-1 block w-full" :value="old('name', $user->selfie_id)"
+                autofocus autocomplete="name" />
+            <x-input-error class="mt-2" :messages="$errors->get('selfie_id')" />
         </div>
 
         <div class="flex items-center gap-4">

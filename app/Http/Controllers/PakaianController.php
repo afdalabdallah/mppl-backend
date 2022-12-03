@@ -21,13 +21,13 @@ class PakaianController extends Controller
      */
     public function viewCreate()
     {
-        return view('admin/create');
+        return view('admin.create');
     }
     public function insertPakaian()
     {
         $pakaian = new PakaianService();
         $pakaian->insertData(Request());
-        return redirect('/dashboard');
+        return redirect('/admin/insert');
     }
 
     public function getPakaianData($b_id)

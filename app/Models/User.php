@@ -22,6 +22,10 @@ class User extends Authenticatable
         'email',
         'no_telp',
         'password',
+        'role',
+        'id_card',
+        'selfie_id',
+        'verified_status',
 
     ];
 

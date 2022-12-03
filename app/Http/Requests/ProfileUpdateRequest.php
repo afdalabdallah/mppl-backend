@@ -19,6 +19,8 @@ class ProfileUpdateRequest extends FormRequest
             'name' => ['string', 'max:255'],
             'email' => ['email', 'max:255', Rule::unique(User::class)->ignore($this->user()->id)],
             'no_telp' => ['string', 'max:255'],
+            'id_card' => [],
+            'selfie_id' => [],
         ];
     }
 }

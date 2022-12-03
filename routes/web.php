@@ -34,12 +34,18 @@ Route::get('/catalog', [CatalogController::class, 'viewAllCatalog']);
 
 Route::get('/item/{id}', [DetailController::class, 'viewDetail']);
 
+// Route admin
+Route::middleware(['auth', 'role:admin'])->group(function () {
+    Route::get('/admin/insert', [PakaianController::class, 'viewCreate']);
+    Route::post('/admin/insert', [PakaianController::class, 'insertPakaian']);
+});
+
 Route::middleware('auth')->group(function () {
     Route::get('/profile', [ProfileController::class, 'edit'])->name('profile.edit');
     Route::patch('/profile', [ProfileController::class, 'update'])->name('profile.update');
     Route::delete('/profile', [ProfileController::class, 'destroy'])->name('profile.destroy');
-    Route::get('/insert', [PakaianController::class, 'viewCreate']);
-    Route::post('/insert', [PakaianController::class, 'insertPakaian']);
+    Route::post('/profile/verify', [ProfileController::class, 'updateStatus']);
+
     Route::get('/cart', [CartController::class, 'getCartData']);
     Route::post('/cart/insert/{id}', [CartController::class, 'insertCart']);
     Route::post('/cart/delete/{id}', [CartController::class, 'deleteCart']);

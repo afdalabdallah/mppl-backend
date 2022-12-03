@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Http\Requests\ProfileUpdateRequest;
+use Carbon\Carbon;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Redirect;
@@ -21,9 +22,11 @@ class ProfileController extends Controller
         return view('profile.edit', [
             'user' => $request->user(),
         ]);
+        // return ($request->user());
     }
 
-    public function getUser($id){
+    public function getUser($id)
+    {
         $table = DB::table('users')->where('id', $id)->get()->first();
         return ($table);
     }
@@ -34,17 +37,36 @@ class ProfileController extends Controller
      * @param  \App\Http\Requests\ProfileUpdateRequest  $request
      * @return \Illuminate\Http\RedirectResponse
      */
-    public function update(ProfileUpdateRequest $request)
+    public function update()
     {
-        $request->user()->fill($request->validated());
+        $id = Auth::id();
+        $user = DB::table('users')->where('id', $id)->get()->first();
 
-        if ($request->user()->isDirty('email')) {
-            $request->user()->email_verified_at = null;
+        if (Request()->id_card == null) {
+            Request()->id_card = $user->id_card;
         }
 
-        $request->user()->save();
-
+        if (Request()->selfie_id == null) {
+            Request()->selfie_id = $user->selfie_id;
+        }
+        $data = [
+            'name' => Request()->name,
+            'email' => Request()->email,
+            'no_telp' => Request()->no_telp,
+            'id_card' => Request()->id_card,
+            'selfie_id' => Request()->selfie_id,
+            'updated_at' => Carbon::now(),
+        ];
+        DB::table('users')->where('id', $id)->update($data);
+        // return ($request);
         return Redirect::route('profile.edit')->with('status', 'profile-updated');
+    }
+
+    public function updateStatus()
+    {
+        $id = Auth::id();
+        DB::table('users')->where('id', $id)->update(['verified_status' => 'pending']);
+        return redirect('profile');
     }
 
     /**
