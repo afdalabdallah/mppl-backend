@@ -7,30 +7,29 @@ use Illuminate\Http\Request;
 use DateTime;
 use Haruncpi\LaravelIdGenerator\IdGenerator;
 use DB;
+use Illuminate\Support\Facades\Auth;
 
-class RentService
+class PengembalianService
 {
-    public static function getAllOrder()
+    public static function getAllPengembalian()
     {
-        $tableData = DB::table('penyewaan')
-            ->where('penyewaan.status', '!=', 'cart');
+        $tableData = DB::table('pengembalian')
+            ->where('pengembalian.status', '!=', 'complete');
         $tableData = $tableData->get();
         return ($tableData);
     }
-    public static function getOrderData($id_user)
+    public static function getPengembalianData($id_user)
     {
-        $tableData = DB::table('penyewaan')
-            ->where('penyewaan.user_id', $id_user)
-            ->where('penyewaan.status', '!=', 'cart');
+        $tableData = DB::table('pengembalian')
+            ->where('user_id', $id_user);
         $tableData = $tableData->get();
         return ($tableData);
     }
 
-    public static function getOrderDetail($id)
+    public static function getPengembalianDetail($id)
     {
-        $tableData = DB::table('penyewaan')
-            ->where('penyewaan.id', $id)
-            ->where('penyewaan.status', '!=', 'cart');
+        $tableData = DB::table('pengembalian')
+            ->where('pengembalian.id', $id);
         $tableData = $tableData->get()->first();
         return ($tableData);
     }
@@ -54,11 +53,11 @@ class RentService
 
     public static function insertData($requestData)
     {
-        $table = DB::table('penyewaan');
+        $table = DB::table('pengembalian');
         $id = IdGenerator::generate([
-            'table' => 'penyewaan',
+            'table' => 'pengembalian',
             'length' => 5,
-            'prefix' => 'R'
+            'prefix' => 'A'
         ]);
 
         $rows = $table->count();
@@ -67,14 +66,18 @@ class RentService
 
         $data = [
             'id' => $id,
-            'user_id' => $requestData['user_id'],
-            'item_id' => $requestData['item_id'],
-            'qty' => $requestData['qty'],
-            'total_harga' => $requestData['harga'],
-            'deposit' => $requestData['deposit'],
-            'status' => $requestData['status'],
-            'start_date' => $requestData['start_time'],
-            'end_date' => $requestData['end_time'],
+            'order_id' => $requestData['order_id'],
+            'user_id' => Auth::id(),
+            'name' => $requestData['name'],
+            'address' => $requestData['address'],
+            'no_telp' => $requestData['no_telp'],
+            'bank' => $requestData['bank'],
+            'nomor_bank' => $requestData['nomor_bank'],
+            'no_resi' => $requestData['no_resi'],
+            'foto_resi' => $requestData['foto_resi'],
+            'foto_paket' => $requestData['foto_paket'],
+            'note' => $requestData['note'],
+            'status' => 'process',
             'created_at' => Carbon::now()->toDateTimeString(),
             'updated_at' => Carbon::now()->toDateTimeString()
         ];

@@ -96,6 +96,7 @@ class CartController extends Controller
             'user_id' => $id_user,
             'item_id' => $id,
             'harga' =>  $total_price,
+            'deposit' => $total_price * 30 / 100,
             'qty' => 1,
             'status' => 'cart',
             'start_time' => Request()->start_time,

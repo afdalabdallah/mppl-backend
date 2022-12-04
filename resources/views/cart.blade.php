@@ -99,9 +99,20 @@
                     Total: <span id="total">Rp {{ $totalPrice }}</span>
                 </div>
                 <div class="mt-5">
-                    <a href="/checkout"><button
-                            class="bg-[#2DBE78] text-white font-semibold py-2 px-4 rounded-full">CHECKOUT</button></a>
+                    <button id="checkoutBtn" onclick="window.location.href='/checkout'"
+                        class="bg-[#2DBE78] text-white font-semibold py-2 px-4 rounded-full">
+                        CHECKOUT
+                    </button>
                 </div>
+                @if (Auth::user()->verified_status != 'verified')
+                    <script>
+                        btn = document.getElementById('checkoutBtn')
+                        btn.setAttribute('disabled', 'true')
+                    </script>
+                    <p class="text-red">
+                        Please verify your account to checkout !
+                    <p>
+                @endif
             </div>
         </div>
     </div>

@@ -16,6 +16,13 @@ class PakaianService
         return ($tableData);
     }
 
+    public static function getAllData()
+    {
+        $tableData = DB::table('pakaian');
+        $tableData = $tableData->get();
+        return ($tableData);
+    }
+
     public static function getCategory($category)
     {
         $tableData = DB::table('pakaian')->where('category', $category)->where('stock', '>', 1);

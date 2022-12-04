@@ -7,6 +7,7 @@ use App\Http\Controllers\DetailController;
 use App\Http\Controllers\CartController;
 use App\Http\Controllers\CheckoutController;
 use App\Http\Controllers\OrderController;
+use App\Http\Controllers\PengembalianController;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -38,6 +39,21 @@ Route::get('/item/{id}', [DetailController::class, 'viewDetail']);
 Route::middleware(['auth', 'role:admin'])->group(function () {
     Route::get('/admin/insert', [PakaianController::class, 'viewCreate']);
     Route::post('/admin/insert', [PakaianController::class, 'insertPakaian']);
+
+    Route::get('/admin/order', [OrderController::class, 'getAllOrder']);
+    Route::get('/admin/order/detail/{id}', [OrderController::class, 'getOrderDetailAdmin']);
+    Route::get('/admin/order/edit/{id}', [OrderController::class, 'viewEdit']);
+    Route::post('/admin/order/update/{id}', [OrderController::class, 'updateStatus']);
+
+
+    Route::get('/admin/user', [ProfileController::class, 'getAllUser']);
+    Route::get('/admin/user/detail/{id}', [ProfileController::class, 'getUserAdmin']);
+    Route::post('/admin/user/accept/{id}', [ProfileController::class, 'acceptVerify']);
+    Route::post('/admin/user/reject/{id}', [ProfileController::class, 'rejectVerify']);
+
+    Route::get('/admin/item', [PakaianController::class, 'getAllPakaian']);
+
+    Route::get('/admin/return', [PengembalianController::class, 'getAllPengembalian']);
 });
 
 Route::middleware('auth')->group(function () {
@@ -60,6 +76,11 @@ Route::middleware('auth')->group(function () {
     Route::get('/order_finish', [OrderController::class, 'orderFinish']);
     Route::post('/place_order', [OrderController::class, 'insertOrder']);
     Route::get('/detail_order/{id}', [OrderController::class, 'getOrderDetail']);
+
+    Route::get('/pengembalian', [PengembalianController::class, 'getPengembalian']);
+    Route::get('/pengembalian_detail/{id}', [PengembalianController::class, 'getPengembalianDetail']);
+    Route::get('/pengembalian/form', [PengembalianController::class, 'viewForm']);
+    Route::post('/pengembalian/insert', [PengembalianController::class, 'insertPengembalian']);
 });
 
 

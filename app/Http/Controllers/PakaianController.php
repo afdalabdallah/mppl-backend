@@ -23,6 +23,14 @@ class PakaianController extends Controller
     {
         return view('admin.create');
     }
+
+    public function getAllPakaian()
+    {
+        $pakaian = new PakaianService();
+        $table = $pakaian->getAllData();
+        return view('admin.item')->with(['pakaianData' => $table]);
+    }
+
     public function insertPakaian()
     {
         $pakaian = new PakaianService();

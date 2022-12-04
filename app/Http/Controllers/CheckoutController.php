@@ -36,22 +36,8 @@ class CheckoutController extends Controller
         $rentData = $getTable->getCartData($id_user, 'cart');
         $total_price = 0;
         foreach ($rentData as $data) {
+            $rentData->deposit = $data->total_harga * 30 / 100;
             $total_price += $data->total_harga;
-            $pakaianData = $pakaianDetail->getDetail($data->item_id);
-            $data->size = $pakaianData[0]->size;
-            $img = json_decode($pakaianData[0]->img);
-            $data->name = $pakaianData[0]->name;
-            $data->img = $img[4];
-            $data->color = $pakaianData[0]->color;
-
-            $s_date = $data->start_date;
-            $s_date = explode(" ", $s_date);
-
-            $e_date = $data->end_date;
-            $e_date = explode(" ", $e_date);
-
-            $data->start_date = $s_date[0];
-            $data->end_date = $e_date[0];
         }
 
         // return ($rentData);
@@ -67,9 +53,11 @@ class CheckoutController extends Controller
         $rentData = $getTable->getCartData($id_user, 'cart');
         $total_price = 0;
         foreach ($rentData as $data) {
+            $rentData->deposit = $data->total_harga * 30 / 100;
             $total_price += $data->total_harga;
             $req = [
                 'address' => json_encode(Request()->address),
+                'name' => Request()->name,
             ];
             $getTable->updateData($data->id, $req);
         }
@@ -85,6 +73,7 @@ class CheckoutController extends Controller
         $rentData = $getTable->getCartData($id_user, 'cart');
         $total_price = 0;
         foreach ($rentData as $data) {
+            $rentData->deposit = $data->total_harga * 30 / 100;
             $total_price += $data->total_harga;
             $data->address = json_decode($data->address);
         }

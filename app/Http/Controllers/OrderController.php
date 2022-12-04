@@ -28,6 +28,12 @@ class OrderController extends Controller
      *
      * @return \Illuminate\Contracts\Support\Renderable
      */
+    public function getAllOrder()
+    {
+        $getTable = new RentService();
+        $rentData = $getTable->getAllOrder();
+        return view('admin.order')->with(['rentData' => $rentData]);
+    }
     public function getOrderData()
     {
         $id_user = Auth::id();
@@ -35,8 +41,6 @@ class OrderController extends Controller
         $pakaianDetail = new PakaianService();
 
         $user = new ProfileController();
-        $userData = $user->getUser($id_user);
-        $user_name = $userData->name;
         $rentData = $getTable->getOrderData($id_user);
         $total_price = 0;
         foreach ($rentData as $data) {
@@ -53,7 +57,6 @@ class OrderController extends Controller
 
             $e_date = $data->end_date;
             $e_date = explode(" ", $e_date);
-            $data->user_name = $user_name;
             $data->start_date = $s_date[0];
             $data->end_date = $e_date[0];
             $data->address = json_decode($data->address);
@@ -64,13 +67,38 @@ class OrderController extends Controller
         //return view
     }
 
+    public function getOrderDetailAdmin($id)
+    {
+
+        $getTable = new RentService();
+        $rentDetail = $getTable->getOrderDetail($id);
+
+        $user = new ProfileController();
+        $userData = $user->getUser($rentDetail->user_id);
+
+        $s_date = $rentDetail->start_date;
+        $s_date = explode(" ", $s_date);
+
+        $e_date = $rentDetail->end_date;
+        $e_date = explode(" ", $e_date);
+
+        $u_date = $rentDetail->updated_at;
+        $u_date = explode(" ", $u_date);
+
+        $rentDetail->updated_at = $u_date[0];
+        $rentDetail->start_date = $s_date[0];
+        $rentDetail->end_date = $e_date[0];
+        $rentDetail->address = json_decode($rentDetail->address);
+
+        // return ($rentDetail);
+        return view('admin.detail_order')->with(['order' => $rentDetail]);
+    }
+
     public function getOrderDetail($id)
     {
         $id_user = Auth::id();
 
         $user = new ProfileController();
-        $userData = $user->getUser($id_user);
-        $user_name = $userData->name;
 
         $getTable = new RentService();
         $rentDetail = $getTable->getOrderDetail($id);
@@ -88,15 +116,14 @@ class OrderController extends Controller
         $rentDetail->start_date = $s_date[0];
         $rentDetail->end_date = $e_date[0];
         $rentDetail->address = json_decode($rentDetail->address);
-        $rentDetail->user_name = $user_name;
 
-        if ($rentDetail->status = 'process') {
+        if ($rentDetail->status == 'process') {
             $rentDetail->w = 25;
-        } elseif ($rentDetail->status = 'sent') {
+        } elseif ($rentDetail->status == 'sent') {
             $rentDetail->w = 46;
-        } elseif ($rentDetail->status = 'received') {
+        } elseif ($rentDetail->status == 'received') {
             $rentDetail->w = 69;
-        } elseif ($rentDetail->status = 'received_back') {
+        } elseif ($rentDetail->status == 'received_back') {
             $rentDetail->w = 100;
         } else {
             $rentDetail->w = 4;
@@ -115,6 +142,7 @@ class OrderController extends Controller
         foreach ($rentData as $data) {
             $req = [
                 'status' => 'process',
+                'updated_at' => Carbon::now()->toDateTimeString(),
             ];
             $getTable->updateData($data->id, $req);
         }
@@ -124,5 +152,25 @@ class OrderController extends Controller
     public function orderFinish()
     {
         return view('order_finish');
+    }
+
+    public function viewEdit($id)
+    {
+        $getTable = new RentService();
+        $rentDetail = $getTable->getOrderDetail($id);
+        // return ($rentDetail);
+        return view('admin.edit_order')->with(['order' => $rentDetail]);
+    }
+
+    public function updateStatus($id)
+    {
+        $getTable = new RentService();
+
+        $req = [
+            'status' => Request()->status,
+            'updated_at' => Carbon::now()->toDateTimeString(),
+        ];
+        $getTable->updateData($id, $req);
+        return redirect('/admin/order');
     }
 }

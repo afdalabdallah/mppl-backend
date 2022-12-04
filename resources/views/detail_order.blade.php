@@ -24,9 +24,9 @@
         </div>
     </div>
 
-    <div class="flex flex-row justify-center mt-20 gap-72">
+    <div class="flex flex-row justify-center mt-20 gap-72 mb-10">
         <div>
-            <div class="font-semibold">{{ $rentDetail->user_name }}</div>
+            <div class="font-semibold">{{ $rentDetail->name }}</div>
             <div class="w-[250px]">
                 @foreach ($rentDetail->address as $address)
                     {{ $address }},&nbsp;
@@ -59,11 +59,15 @@
                 </div>
                 <div class="flex flex-row justify-between w-[250px] text-gray-500">
                     <div class="font-semibold">Shipping</div>
-                    <div class="font-semibold">-</div>
+                    <div class="font-semibold">Rp 55000</div>
+                </div>
+                <div class="flex flex-row justify-between w-[250px] text-gray-500">
+                    <div class="font-semibold">Deposit</div>
+                    <div class="font-semibold">Rp {{ $rentDetail->deposit }}</div>
                 </div>
                 <div class="flex flex-row justify-between w-[250px] divide-y divide-black">
                     <div class="font-semibold">Total</div>
-                    <div class="font-semibold">Rp {{ $rentDetail->total_harga }}</div>
+                    <div class="font-semibold">Rp {{ $rentDetail->total_harga + 55000 + $rentDetail->deposit }}</div>
                 </div>
             </div>
         </div>

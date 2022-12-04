@@ -13,18 +13,20 @@ return new class extends Migration
      */
     public function up()
     {
-        Schema::create('penyewaan', function (Blueprint $table) {
+        Schema::create('pengembalian', function (Blueprint $table) {
             $table->string('id')->unique();
+            $table->string('order_id');
             $table->string('user_id');
-            $table->string('name')->nullable();
-            $table->string('item_id');
-            $table->integer('qty');
-            $table->decimal('total_harga', $precision = 10, $scale = 2);
-            $table->decimal('deposit', $precision = 10, $scale = 2);
+            $table->string('name');
+            $table->string('address');
+            $table->string('no_telp');
+            $table->string('bank');
+            $table->string('nomor_bank');
+            $table->string('no_resi');
+            $table->string('foto_resi');
+            $table->string('foto_paket');
+            $table->string('note')->nullable();
             $table->string('status');
-            $table->dateTime('start_date');
-            $table->dateTime('end_date');
-            $table->json('address')->nullable();
             $table->timestamps();
         });
     }
@@ -36,6 +38,6 @@ return new class extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('penyewaan');
+        Schema::dropIfExists('pengembalian');
     }
 };

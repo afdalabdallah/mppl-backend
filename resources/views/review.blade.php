@@ -5,7 +5,7 @@
 @section('main')
     <div class="flex flex-row justify-start pt-10 pl-20">
         <div class="">
-            <a href="checkout2.html">
+            <a href="/payment">
                 <ion-icon name="arrow-back-outline" class="text-3xl text-[#2DBE78]"></ion-icon>
             </a>
             <div></div>
@@ -44,12 +44,12 @@
         </div>
         <!-- tax -->
         <div class="flex flex-row justify-between w-[400px] text-gray-500">
-            <div class="font-semibold">Tax</div>
-            <div class="font-semibold">Rp 0</div>
+            <div class="font-semibold">Deposit</div>
+            <div class="font-semibold">Rp {{ $rentData->deposit }}</div>
         </div>
         <div class="flex flex-row justify-between w-[400px] divide-y divide-black">
             <div class="font-semibold">Total</div>
-            <div class="font-semibold">Rp {{ $totalPrice + 55000 }}</div>
+            <div class="font-semibold">Rp {{ $totalPrice + 55000 + $rentData->deposit }}</div>
         </div>
         <div class="flex justify-center align-middle w-[250px] text-black divide-black">
             <div class="font-bold text-lg">
@@ -83,7 +83,7 @@
     </div>
 
     <!-- confirm button -->
-    <div class="mt-10">
+    <div class="mt-10 mb-10">
         <!-- next button -->
         <a href="checkout4.html">
             <div class="flex flex-row align-middle justify-center text-center">

@@ -29,6 +29,9 @@
             background: #555;
         }
     </style>
+    <link rel="stylesheet" href="https://unpkg.com/flowbite@1.5.4/dist/flowbite.min.css" />
+    <script src="https://unpkg.com/flowbite@1.5.4/dist/flowbite.js"></script>
+    <script src="../path/to/flowbite/dist/flowbite.js"></script>
     <script type="module" src="https://unpkg.com/ionicons@5.5.2/dist/ionicons/ionicons.esm.js"></script>
     <script nomodule src="https://unpkg.com/ionicons@5.5.2/dist/ionicons/ionicons.js"></script>
     <!-- Scripts -->
@@ -86,8 +89,6 @@
                                     @else
                                         <a href="/order" class="text-gray-700 block px-4 py-2 text-sm" role="menuitem"
                                             tabindex="-1" id="options-menu-item-1">Order Status</a>
-                                        <a href="/pengembalian" class="text-gray-700 block px-4 py-2 text-sm"
-                                            role="menuitem" tabindex="-1" id="options-menu-item-1">Return Status</a>
                                     @endif
                                     <form method="POST" action="{{ route('logout') }}">
                                         @csrf
@@ -107,7 +108,58 @@
 
     <!-- Page Content -->
     <main>
-        @yield('main')
+        <div class="flex">
+            <div class="bg-[#2DBE78] min-h-screen w-[250px] pt-10">
+                <div class="flex flex-col items-center justify-center h-[100px] ">
+                    <img src="/img/profile.png" alt="avatar" class="h-[70px] w-[70px] rounded-full" />
+                    <div class="text-white font-semibold text-lg mt-2">{{ Auth::user()->name }}</div>
+                </div>
+                <div class="mt-20">
+                    <!-- add item button -->
+                    <div class="flex flex-row items-center justify-center mt-5 text-center">
+                        <a href="/admin/insert"
+                            class="bg-white text-[#2DBE78] hover:bg-gray-400 font-semibold hover:text-white py-2 px-4 rounded-sm w-[200px]">
+                            Add Item
+                        </a>
+                    </div>
+                </div>
+                <div>
+                    <!-- add item button -->
+                    <div class="flex flex-row items-center justify-center mt-5 text-center">
+                        <a href="/admin/item"
+                            class="bg-white text-[#2DBE78] hover:bg-gray-400 font-semibold hover:text-white py-2 px-4 rounded-sm w-[200px]">
+                            Item List
+                        </a>
+                    </div>
+                </div>
+                <div>
+                    <div class="flex flex-row items-center justify-center mt-5 text-center">
+                        <a href="/admin/order"
+                            class="bg-white text-[#2DBE78] hover:bg-gray-400 font-semibold hover:text-white py-2 px-4 rounded-sm w-[200px]">
+                            Order Status
+                        </a>
+                    </div>
+                </div>
+                <div>
+                    <div class="flex flex-row items-center justify-center mt-5 text-center">
+                        <a href="/admin/return"
+                            class="bg-white text-[#2DBE78] hover:bg-gray-400 font-semibold hover:text-white py-2 px-4 rounded-sm w-[200px]">
+                            Return Status
+                        </a>
+                    </div>
+                </div>
+                <div>
+                    <div class="flex flex-row items-center justify-center mt-5 text-center">
+                        <a href="/admin/user"
+                            class="bg-white text-[#2DBE78] hover:bg-gray-400 font-semibold hover:text-white py-2 px-4 rounded-sm w-[200px]">
+                            Verify Status
+                        </a>
+                    </div>
+                </div>
+            </div>
+            @yield('main')
+        </div>
+
     </main>
 
     <footer class="bg-black h-[350px] text-white p-[70px]">

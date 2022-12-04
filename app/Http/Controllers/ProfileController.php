@@ -31,6 +31,18 @@ class ProfileController extends Controller
         return ($table);
     }
 
+    public function getUserAdmin($id)
+    {
+        $table = DB::table('users')->where('id', $id)->get()->first();
+        return view('admin.detail_user')->with(['user' => $table]);
+    }
+
+    public function getAllUser()
+    {
+        $table = DB::table('users')->where('role', '!=', 'admin')->where('verified_status', '!=', 'not_verified')->get();
+        return view('admin.user')->with(['userData' => $table]);
+    }
+
     /**
      * Update the user's profile information.
      *
@@ -67,6 +79,18 @@ class ProfileController extends Controller
         $id = Auth::id();
         DB::table('users')->where('id', $id)->update(['verified_status' => 'pending']);
         return redirect('profile');
+    }
+
+    public function acceptVerify($id)
+    {
+        DB::table('users')->where('id', $id)->update(['verified_status' => 'verified']);
+        return redirect('/admin/user');
+    }
+
+    public function rejectVerify($id)
+    {
+        DB::table('users')->where('id', $id)->update(['verified_status' => 'not_verified']);
+        return redirect('/admin/user');
     }
 
     /**

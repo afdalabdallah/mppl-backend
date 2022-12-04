@@ -21,7 +21,6 @@
         <div class="flex flex-col items-center justify-center gap-5">
             <div class="text-3xl font-bold">Order Placed!</div><br>
             <div class="text-3xl font-semibold">Thank you for your order</div>
-            <div class="text-lg font-medium">Your order number is #123456789</div>
         </div>
         <div class="flex flex-col items-center justify-center gap-5">
             <div class="text-lg font-semibold">Your order will be delivered in 3-5 business days</div>
@@ -36,7 +35,7 @@
     </div>
 
     <!-- back button -->
-    <div class="flex flex-row items-center justify-center mt-10">
+    <div class="flex flex-row items-center justify-center mt-10 mb-10">
         <a href="/dashboard">
             <button
                 class="bg-[#2DBE78] text-black hover:bg-black font-semibold hover:text-[#2DBE78] py-2 px-4 rounded-full">

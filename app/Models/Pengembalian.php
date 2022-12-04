@@ -8,7 +8,7 @@ use Illuminate\Foundation\Auth\Rents as Authenticatable;
 use Illuminate\Notifications\Notifiable;
 use Laravel\Sanctum\HasApiTokens;
 
-class Rents extends Authenticatable
+class Pengembalian extends Authenticatable
 {
     use HasApiTokens, HasFactory, Notifiable;
 
@@ -18,19 +18,19 @@ class Rents extends Authenticatable
      * @var array<int, string>
      */
     protected $fillable = [
+        'id',
+        'order_id',
         'user_id',
-        'total_harga',
-        'deposit',
-        'item_id',
         'name',
-        'qty',
-        'start_date',
-        'end_date',
-        'status',
+        'address',
+        'no_telp',
+        'bank',
+        'nomor_bank',
+        'no_resi',
+        'foto_resi',
+        'foto_paket',
+        'note',
+        'status'
 
-    ];
-
-    protected $casts = [
-        'address' => 'array'
     ];
 }
