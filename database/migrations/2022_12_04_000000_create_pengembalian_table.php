@@ -27,6 +27,7 @@ return new class extends Migration
             $table->string('foto_paket');
             $table->string('note')->nullable();
             $table->string('status');
+            $table->string('rejected_msg');
             $table->timestamps();
         });
     }

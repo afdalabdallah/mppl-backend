@@ -54,6 +54,11 @@ Route::middleware(['auth', 'role:admin'])->group(function () {
     Route::get('/admin/item', [PakaianController::class, 'getAllPakaian']);
 
     Route::get('/admin/return', [PengembalianController::class, 'getAllPengembalian']);
+    Route::get('/admin/return/edit/{id}', [PengembalianController::class, 'viewEdit']);
+    Route::get('/admin/return/reject/{id}', [PengembalianController::class, 'viewReject']);
+    Route::post('/admin/return/update/{id}', [PengembalianController::class, 'updateStatus']);
+    Route::get('/admin/return/detail/{id}', [PengembalianController::class, 'getDetailAdminPengembalian']);
+    Route::post('/admin/return/reject/{id}', [PengembalianController::class, 'deletePengembalian']);
 });
 
 Route::middleware('auth')->group(function () {
@@ -80,6 +85,8 @@ Route::middleware('auth')->group(function () {
     Route::get('/pengembalian', [PengembalianController::class, 'getPengembalian']);
     Route::get('/pengembalian_detail/{id}', [PengembalianController::class, 'getPengembalianDetail']);
     Route::get('/pengembalian/form', [PengembalianController::class, 'viewForm']);
+    Route::get('/pengembalian/edit', [PengembalianController::class, 'viewEditForm']);
+    Route::post('/pengembalian/update', [PengembalianController::class, 'updatePengembalian']);
     Route::post('/pengembalian/insert', [PengembalianController::class, 'insertPengembalian']);
 });
 

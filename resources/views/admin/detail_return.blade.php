@@ -1,90 +1,82 @@
 @extends('layouts.admin')
-@section('title', 'User Dashboard | Admin')
+@section('title', 'Return Detail | Pakai.in')
 
 @section('main')
-
-    <div class="w-100 mx-auto">
+    <div class="w-100 mx-auto mb-20">
         <div class="flex flex-col items-center justify-center w-100 mt-20">
-            <div class="text-[#2DBE78] font-semibold text-2xl mb-4">User Detail</div>
+            <div class="text-[#2DBE78] font-semibold text-2xl mb-4">Return Detail</div>
             <div class="flex flex-col items-center justify-center">
                 <!-- table (order_id, status, action[detail, edit, delete]) -->
-                <table class="table-fixed">
+                <table class="table-fixed  ">
                     <tbody>
+                        <tr>
+                            <td class="px-4 py-2">Return ID</td>
+                            <td class="px-4 py-2">:</td>
+                            <td class="px-4 py-2">{{ $pengembalianData->id }}</td>
+                        </tr>
                         <tr>
                             <td class="px-4 py-2">Order ID</td>
                             <td class="px-4 py-2">:</td>
-                            <td class="px-4 py-2">{{ $order->id }}</td>
+                            <td class="px-4 py-2">{{ $pengembalianData->order_id }}</td>
                         </tr>
                         <tr>
                             <td class="px-4 py-2">User ID</td>
                             <td class="px-4 py-2">:</td>
-                            <td class="px-4 py-2">{{ $order->user_id }}</td>
+                            <td class="px-4 py-2">{{ $pengembalianData->user_id }}</td>
                         </tr>
                         <tr>
-                            <td class="px-4 py-2">Item ID</td>
+                            <td class="px-4 py-2">No Telp</td>
                             <td class="px-4 py-2">:</td>
-                            <td class="px-4 py-2">{{ $order->item_id }}</td>
+                            <td class="px-4 py-2">{{ $pengembalianData->no_telp }}</td>
                         </tr>
                         <tr>
-                            <td class="px-4 py-2">Qty</td>
+                            <td class="px-4 py-2">Bank</td>
                             <td class="px-4 py-2">:</td>
-                            <td class="px-4 py-2">{{ $order->qty }}</td>
+                            <td class="px-4 py-2">{{ $pengembalianData->bank }}</td>
                         </tr>
                         <tr>
-                            <td class="px-4 py-2">Total Harga</td>
+                            <td class="px-4 py-2">Nomor Bank/E-money</td>
                             <td class="px-4 py-2">:</td>
-                            <td class="px-4 py-2">
-                                {{ $order->total_harga }}
-                            </td>
+                            <td class="px-4 py-2">{{ $pengembalianData->nomor_bank }}</td>
                         </tr>
                         <tr>
-                            <td class="px-4 py-2">Deposit</td>
+                            <td class="px-4 py-2">Nomor Resi</td>
                             <td class="px-4 py-2">:</td>
-                            <td class="px-4 py-2">
-                                {{ $order->deposit }}
-                            </td>
+                            <td class="px-4 py-2">{{ $pengembalianData->no_resi }}</td>
+                        </tr>
+                        <tr>
+                            <td class="px-4 py-2">Note</td>
+                            <td class="px-4 py-2">:</td>
+                            <td class="px-4 py-2">{{ $pengembalianData->note }}</td>
                         </tr>
                         <tr>
                             <td class="px-4 py-2">Status</td>
                             <td class="px-4 py-2">:</td>
-                            <td class="px-4 py-2">{{ $order->status }}</td>
+                            <td class="px-4 py-2">{{ $pengembalianData->status }}</td>
                         </tr>
                         <tr>
-                            <td class="px-4 py-2">Start Date</td>
+                            <td class="px-4 py-2">Deposit</td>
                             <td class="px-4 py-2">:</td>
-                            <td class="px-4 py-2">{{ $order->start_date }}</td>
+                            <td class="px-4 py-2">RP {{ $pengembalianData->deposit }}</td>
                         </tr>
                         <tr>
-                            <td class="px-4 py-2">End Date</td>
-                            <td class="px-4 py-2">:</td>
-                            <td class="px-4 py-2">{{ $order->end_date }}</td>
-                        </tr>
-                        <tr>
-                            <td class="px-4 py-2">Address</td>
+                            <td class="px-4 py-2">ID Card</td>
                             <td class="px-4 py-2">:</td>
                             <td class="px-4 py-2">
-                                @foreach ($order->address as $item)
-                                    {{ $item }},&nbsp;
-                                @endforeach
+                                <img class="h-[200px]" src="/img/return/{{ $pengembalianData->foto_resi }}" />
                             </td>
                         </tr>
                         <tr>
-                            <td class="px-4 py-2">Created At</td>
+                            <td class="px-4 py-2">Selfie wit ID Card</td>
                             <td class="px-4 py-2">:</td>
                             <td class="px-4 py-2">
-                                {{ $order->created_at }}
+                                <img class="h-[200px]" src="/img/return/{{ $pengembalianData->foto_paket }}" />
                             </td>
                         </tr>
-                        <tr>
-                            <td class="px-4 py-2">Updated At</td>
-                            <td class="px-4 py-2">:</td>
-                            <td class="px-4 py-2">
-                                {{ $order->updated_at }}
-                            </td>
-                        </tr>
+
                     </tbody>
                 </table>
-                <a href="/admin/order"
+                <a href="/admin/return"
                     class="mt-8 block text-white bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm px-5 py-2.5 text-center dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800"
                     type="button" data-modal-toggle="popup-modal">
                     Back
@@ -92,5 +84,4 @@
             </div>
         </div>
     </div>
-
 @endsection

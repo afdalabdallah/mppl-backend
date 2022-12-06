@@ -34,22 +34,6 @@ class PengembalianService
         return ($tableData);
     }
 
-    public static function getCartData($id_user, $status)
-    {
-        $tableData = DB::table('penyewaan')
-            ->where('penyewaan.user_id', $id_user)
-            ->where('penyewaan.status', $status);
-        $tableData = $tableData->get();
-        return ($tableData);
-    }
-
-    public static function getDetail($id)
-    {
-        $tableData = DB::table('penyewaan')
-            ->where('penyewaan.id', $id);
-        $tableData = $tableData->get()->first();
-        return ($tableData);
-    }
 
     public static function insertData($requestData)
     {
@@ -78,6 +62,7 @@ class PengembalianService
             'foto_paket' => $requestData['foto_paket'],
             'note' => $requestData['note'],
             'status' => 'process',
+            'rejected_msg' => '',
             'created_at' => Carbon::now()->toDateTimeString(),
             'updated_at' => Carbon::now()->toDateTimeString()
         ];
@@ -87,11 +72,11 @@ class PengembalianService
     public static function updateData($id, $requestData)
     {
 
-        DB::table('penyewaan')->where('id', $id)->update($requestData);
+        DB::table('pengembalian')->where('id', $id)->update($requestData);
     }
 
     public static function deleteData($id)
     {
-        DB::table('penyewaan')->where('id', $id)->delete();
+        DB::table('pengembalian')->where('id', $id)->delete();
     }
 }

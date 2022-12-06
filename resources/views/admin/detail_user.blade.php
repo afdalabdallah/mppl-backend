@@ -8,7 +8,7 @@
             <div class="text-[#2DBE78] font-semibold text-2xl mb-4">User Detail</div>
             <div class="flex flex-col items-center justify-center">
                 <!-- table (order_id, status, action[detail, edit, delete]) -->
-                <table class="table-fixed  text-center">
+                <table class="table-fixed">
                     <tbody>
                         <tr>
                             <td class="px-4 py-2">User ID</td>
@@ -38,7 +38,7 @@
                             </td>
                         </tr>
                         <tr>
-                            <td class="px-4 py-2">Selfie wit ID Card</td>
+                            <td class="px-4 py-2">Selfie with ID Card</td>
                             <td class="px-4 py-2">:</td>
                             <td class="px-4 py-2">
                                 <img class="h-[200px]" src="/img/profile/{{ $user->selfie_id }}" />

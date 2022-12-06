@@ -26,7 +26,7 @@
         </div>
         @foreach ($rentData as $data)
             <a href="/detail_order/{{ $data->id }}">
-                <div class="flex flex-row justify-center gap-10 text-center mt-10">
+                <div class="flex flex-row justify-center gap-10 text-center mt-10 hover:bg-gray-100">
                     <div class="w-[400px] flex flex-row justify-center  gap-5">
                         <img src="/img/item/{{ $data->img }}" alt="product" class="h-[100px]" />
                         <div>
