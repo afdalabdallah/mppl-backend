@@ -58,7 +58,7 @@ class PengembalianController extends Controller
             $s_date = $data->created_at;
             $s_date = explode(" ", $s_date);
             $data->created_at = $s_date[0];
-            $data->deposit = $rentData->deposit;
+            $data->deposit = $rentData->deposit * $rentData->qty;
             $data->rejectedMsg = '';
         }
 
@@ -183,6 +183,9 @@ class PengembalianController extends Controller
         }
         if (Request()->status == 'received') {
             $order->updateData($data->order_id, ['status' => 'received_back']);
+        }
+        if(empty(Request()->input('reject_msg'))){
+            Request()->reject_msg = "";
         }
         $req = [
             'status' => Request()->status,
